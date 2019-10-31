@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Eclipse环境下如何配置Tomcat | 迈入新世界，为了成为独当一面的 Web 前端工程师！</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="MinHow,MinHow's Blog" />
+  
+  <meta name="description" content="Eclipse环境下如何配置Tomcat在本小节中，我将详细介绍在Eclipse环境中怎样集成Tomcat。现在Tomcat分了好多个版本，需要注意的是这里我只会用到Tomcat8，而Tomcat8又细分了好多个版本，记得2016年时我就用的是Tomcat8.0.36，按现在2019年2月28号的最新时间来算，Tomcat8已经升级到Tomcat8.5.38这个版本了，所以这两个版本的Tomcat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Eclipse环境下如何配置Tomcat">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;31&#x2F;Eclipse%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AETomcat&#x2F;index.html">
+<meta property="og:site_name" content="迈入新世界，为了成为独当一面的 Web 前端工程师！">
+<meta property="og:description" content="Eclipse环境下如何配置Tomcat在本小节中，我将详细介绍在Eclipse环境中怎样集成Tomcat。现在Tomcat分了好多个版本，需要注意的是这里我只会用到Tomcat8，而Tomcat8又细分了好多个版本，记得2016年时我就用的是Tomcat8.0.36，按现在2019年2月28号的最新时间来算，Tomcat8已经升级到Tomcat8.5.38这个版本了，所以这两个版本的Tomcat">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705110138349.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705110536855.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705111130113.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705112803636.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705112952920.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;2019030100213464.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20190301002143216.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20190301002152597.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20190301002204620.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;2019030100221615.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20190301002225653.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20190301002235941.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705113923444.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705122613278.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705122830434.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705123551640.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705130507032.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705124703522.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705125617013.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705130058545.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705130507032.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20190301003753486.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20190301003857596.png">
+<meta property="og:updated_time" content="2019-10-31T06:52:25.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;20160705110138349.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">MinHow&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>所有文章</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        MinHow&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        渴望着，想象着，努力着。
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="MinHow" target="_blank" href="//minhow.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/xulong-2002">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="微博" target="_blank" href="//weibo.com/6647204936">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/huangminhow">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                        <a title="QQ" target="_blank" href="//user.qzone.qq.com/1377366563/main">
+                            <i class="fa fa-qq fa-2x"></i></a>
+                    
+                        <a title="微信" target="_blank" href="//user.qzone.qq.com/1377366563/main">
+                            <i class="fa fa-weixin fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-Eclipse环境下如何配置Tomcat" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      Eclipse环境下如何配置Tomcat
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-10-31
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h2 id="Eclipse环境下如何配置Tomcat"><a href="#Eclipse环境下如何配置Tomcat" class="headerlink" title="Eclipse环境下如何配置Tomcat"></a>Eclipse环境下如何配置Tomcat</h2><p>在本小节中，我将详细介绍在Eclipse环境中怎样集成Tomcat。现在Tomcat分了好多个版本，需要注意的是这里我只会用到Tomcat8，而Tomcat8又细分了好多个版本，记得2016年时我就用的是Tomcat8.0.36，按现在2019年2月28号的最新时间来算，Tomcat8已经升级到Tomcat8.5.38这个版本了，所以这两个版本的Tomcat我都会教大家一步一步集成到Eclipse中来。</p>
+<h3 id="Eclipse环境下配置Tomcat8-0-36"><a href="#Eclipse环境下配置Tomcat8-0-36" class="headerlink" title="Eclipse环境下配置Tomcat8.0.36"></a>Eclipse环境下配置Tomcat8.0.36</h3><p>1.打开Eclipse，单击“Window”菜单，选择下方的“Preferences”。</p>
+<p><img src="/images/20160705110138349.png" alt=""></p>
+<p>2.单击“Server”选项，选择下方的“Runtime Environments”。</p>
+<p><img src="/images/20160705110536855.png" alt=""></p>
+<p>3.点击“Add”添加Tomcat。</p>
+<p><img src="/images/20160705111130113.png" alt=""></p>
+<p>4.点击“Next”，选中自己安装的Tomcat路径。</p>
+<p><img src="/images/20160705112803636.png" alt=""></p>
+<p>5.点击“Next”，选中自己安装的Tomcat路径。</p>
+<p><img src="/images/20160705112952920.png" alt=""></p>
+<h3 id="Eclipse环境下配置Tomcat8-5-38"><a href="#Eclipse环境下配置Tomcat8-5-38" class="headerlink" title="Eclipse环境下配置Tomcat8.5.38"></a>Eclipse环境下配置Tomcat8.5.38</h3><p>1.打开Eclipse，单击“Window”菜单，选择下方的“Preferences”。</p>
+<p><img src="/images/2019030100213464.png" alt=""></p>
+<p>2.单击“Server”选项，选择下方的“Runtime Environments”。</p>
+<p><img src="/images/20190301002143216.png" alt=""></p>
+<p>3.点击“Add”添加Tomcat。</p>
+<p><img src="/images/20190301002152597.png" alt=""></p>
+<p>4.点击“Next”，选中自己安装的Tomcat路径。</p>
+<p><img src="/images/20190301002204620.png" alt=""></p>
+<p>从上图可以发现，在Eclipse集成Tomcat时，遇到了一个报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The Apache Tomcat installation at this directory is version 8.5.38. A Tomcat 8.0 installation is expected.</span><br></pre></td></tr></table></figure>
+
+<p>这里我的Tomcat的版本是8.5.38，报这个错的原因是Eclipse里面限制Tomcat的最高版本是8.0的，我用的Tomcat的版本明显高于Eclipse的要求。具体的改法如下：<br>首先找到Tomcat的本地安装路径，然后找到lib文件夹中的catalina.jar包，用解压软件打开这个jar包，依次找到并且双击打开catalina.jar\org\apache\catalina\util\ServerInfo.properties文件，如下所示：<br><img src="/images/2019030100221615.png" alt=""></p>
+<p>将文件中server.info=Apache Tomcat/8.5.38中的8.5.38改成8.0.0即可。<br>修改完成后重新配置Tomcat就不会报错了，如下图所示。</p>
+<p><img src="/images/20190301002225653.png" alt=""></p>
+<p>5.点击“Finish”完成。</p>
+<p><img src="/images/20190301002235941.png" alt=""></p>
+<h3 id="建立一个Web应用"><a href="#建立一个Web应用" class="headerlink" title="建立一个Web应用"></a>建立一个Web应用</h3><p>1.<code>File</code> → <code>New</code> → <code>Dynamic Web Project</code></p>
+<p><img src="/images/20160705113923444.png" alt=""></p>
+<p>2.创建一个<code>Dynamic Web Project</code></p>
+<p><img src="/images/20160705122613278.png" alt=""></p>
+<p>3.点击“Next”下一步</p>
+<p><img src="/images/20160705122830434.png" alt=""></p>
+<p>4.点击“Next”下一步</p>
+<p><img src="/images/20160705123551640.png" alt=""></p>
+<p>5.点击“Finish”完成</p>
+<p><img src="/images/20160705130507032.png" alt=""></p>
+<h3 id="让Tomcat服务器显示在控制台上，将Web应用部署到Tomcat中"><a href="#让Tomcat服务器显示在控制台上，将Web应用部署到Tomcat中" class="headerlink" title="让Tomcat服务器显示在控制台上，将Web应用部署到Tomcat中"></a>让Tomcat服务器显示在控制台上，将Web应用部署到Tomcat中</h3><p>1.<code>Window</code> → <code>Show View</code> → <code>Servers</code></p>
+<p><img src="/images/20160705124703522.png" alt=""></p>
+<p>2.点击链接<code>No servers are available. Click ths link to create a new server.</code> ，在弹出的对话框中选择Tomcat版本</p>
+<p><img src="/images/20160705125617013.png" alt=""></p>
+<p>3.点击“Next”，添加我们的项目</p>
+<p><img src="/images/20160705130058545.png" alt="">选中项目并点击Add，或是双击都可以添加到右边</p>
+<p>4.点击“Finish”完成</p>
+<p><img src="/images/20160705130507032.png" alt=""></p>
+<p>返回下方的“Servers”面板，右键单击该面板中的“Tomcat v8.0 Server at localhost”节点，在弹出的快捷菜单中单击“Start”，即可启动指定的Web服务器。如果此时直接启动访问<a href="http://localhost:8080/day05" target="_blank" rel="noopener">http://localhost:8080/day05</a> ，会发现会报404的错误。这是因为我们没有添加主页，下面添加主页(index.jsp)的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;欢迎页面&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	欢迎使用eclipse部署Tomcat。</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：web资源一定要在WebRoot目录下添加</strong>。如图：</p>
+<p><img src="/images/20190301003753486.png" alt=""></p>
+<p>此时，再一次来访问该链接：<code>http://localhost:8080/day05</code> ，效果如下：</p>
+<p><img src="/images/20190301003857596.png" alt=""></p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月31日 14:52</p>
+        <p>原始链接： <a class="post-url" href="/2019/10/31/Eclipse%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AETomcat/" title="Eclipse环境下如何配置Tomcat">http://yoursite.com/2019/10/31/Eclipse%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AETomcat/</a></p>
+        <footer>
+            <a href="http://yoursite.com">
+                <img src="/images/logo.png" alt="徐龙">
+                徐龙
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/10/31/Eclipse%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AETomcat/&title=《Eclipse环境下如何配置Tomcat》 — 迈入新世界，为了成为独当一面的 Web 前端工程师！&pic=http://yoursite.comimages/logo.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/10/31/Eclipse%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AETomcat/&title=《Eclipse环境下如何配置Tomcat》 — 迈入新世界，为了成为独当一面的 Web 前端工程师！&source=" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/10/31/Eclipse%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AETomcat/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Eclipse环境下如何配置Tomcat》 — 迈入新世界，为了成为独当一面的 Web 前端工程师！&url=http://yoursite.com/2019/10/31/Eclipse%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AETomcat/&via=http://yoursite.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/10/31/Eclipse%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AETomcat/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2019/10/31/Eclipse%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AETomcat/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Eclipse环境下如何配置Tomcat"><span class="post-toc-text">Eclipse环境下如何配置Tomcat</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Eclipse环境下配置Tomcat8-0-36"><span class="post-toc-text">Eclipse环境下配置Tomcat8.0.36</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Eclipse环境下配置Tomcat8-5-38"><span class="post-toc-text">Eclipse环境下配置Tomcat8.5.38</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#建立一个Web应用"><span class="post-toc-text">建立一个Web应用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#让Tomcat服务器显示在控制台上，将Web应用部署到Tomcat中"><span class="post-toc-text">让Tomcat服务器显示在控制台上，将Web应用部署到Tomcat中</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2019/10/21/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5SQL%E8%AF%AD%E5%8F%A5/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">MySQL数据库增删改查SQL语句</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 徐龙<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://yoursite.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            
+        </div>
+        <div id="sidebar-menu-box-tags">
+            
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>所有文章</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
